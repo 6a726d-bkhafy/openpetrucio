@@ -1,0 +1,64 @@
+.table_align{
+    text-align: center;
+    margin-top: 10vh;
+}
+.sub{
+    color: white;
+}
+.sub:hover{
+    color: white;
+    text-decoration: none;
+}
+.title_host{
+    background-color: rgb(37, 36, 36);
+}
+.table_host{
+    background-color: rgb(73, 71, 71);
+}
+.title_host label{
+    font-weight: bold;
+}
+.table_host label{
+    font-weight: bold;
+}
+.edit{
+    margin-left: 20px;
+    color: rgb(255, 249, 249);
+}
+.delete{
+    margin-left: 20px;
+    color: rgb(173, 15, 15);
+}
+.text-nowrap:hover{
+    overflow: visible !important;
+}
+.nowrap{
+    white-space: nowrap;
+}
+.nowrap:hover{
+    white-space: normal;
+}
+.modal-body{
+    color: rgb(104, 98, 98);
+}
+.modal-title{
+    color: rgb(37, 36, 36);
+}
+.loading-indicator{
+    color: white;
+}
+.search_field{
+    background-color: rgb(37, 36, 36) !important;
+    padding: 7px;
+    border: 2px solid black;
+    border-radius: 4px;
+}
+.custom-input{
+    background-color: rgb(37, 36, 36) !important;
+    border-color: rgb(21, 21, 21) !important;
+    color: white !important;
+}
+.custom-input:focus{
+    border-color: rgb(0, 0, 0) !important;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(7, 7, 7, 0.6) !important;
+}

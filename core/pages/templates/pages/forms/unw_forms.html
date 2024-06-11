@@ -1,0 +1,45 @@
+{% extends 'pages/default.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+<link rel="stylesheet" href="{% static 'css/forms.css' %}">
+<title>Add Host</title>
+{% endblock %}
+
+{% block content %}
+<div class="form_align">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h3>Add Host</h3>
+            </div>
+            <br>
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <form action="{% url 'unw_to_main' object.id %}" method="POST">
+                    {% csrf_token %}
+        
+                    <p>
+                        <label>IP</label><br>
+                        <div class="field_disabled">
+                            <span name="ip">{{ object.ip }}</span>
+                        </div>  
+                    </p>
+                    <p>
+                        <label>MAC Address</label>
+                        <div class="field_disabled">
+                            <span name="mac">{{ object.mac }}</span>
+                        </div>
+                    </p>
+
+                     {{ form|crispy }}
+        
+                    <button type="submit" class="btn btn-dark">Add</button>
+                </form>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+    </div>
+</div>
+{% endblock %}

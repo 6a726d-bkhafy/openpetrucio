@@ -1,0 +1,18 @@
+.form_align{
+    margin-top: 12vh;
+    text-align: center;
+}
+.col-12{
+    color: white;
+    font-weight: bold;
+}
+span{
+    color: white;
+}
+.field_disabled{
+    box-sizing: border-box;
+    background-color: rgb(37, 36, 36);
+    padding: 7px;
+    border: 2px solid black;
+    border-radius: 4px;
+}

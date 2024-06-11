@@ -1,0 +1,44 @@
+body{
+    font-family: 'Roboto', sans-serif;
+    background-color: rgb(50, 48, 48);
+}
+.row{
+    margin: 0;
+}
+.container{
+    padding: 70px 0;
+}
+p,li{
+    color: rgb(rgb(57, 52, 52));
+    font-size: 14px;
+}
+header, .navbar{
+    background-color: rgb(37, 36, 36);
+}
+#nav-container{
+    padding-top: 0;
+    padding-bottom: 0;
+}
+#logo{
+    width:50px;
+}
+.navbar-brand{
+    padding: 0;
+    color: white;
+}
+.navbar-brand:hover{
+    color: white;
+}
+#navbar-links a{
+    color: white;
+}
+.navbar-expand-lg .navbar-nav .nav-link{
+    padding: 1rem .8rem;
+}
+footer{
+    background-color: rgb(37, 36, 36);
+}
+label{
+    font-size: 12px;
+    color: white;
+}

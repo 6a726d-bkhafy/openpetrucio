@@ -1,0 +1,85 @@
+{% extends 'pages/default.html' %}
+{% load static %}
+{% block title %}
+<link rel="stylesheet" href="{% static 'css/overview.css' %}">
+<title>Switch Table</title>
+{% endblock %}
+{% block content %}
+<div class="custom">
+    <div class="container">
+        <div class="row">
+            <div class="col-4"></div>
+            <div class="col-4">
+                <div>
+                    <label>Hostname</label>
+                </div>
+                <div class="field_disabled">
+                    <span>{{ host.hostname }}</span>
+                </div>
+                <div class="col-4"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% if host.host_type == 'SWITCH' %}
+    <div class="table_align">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                </div>
+                <div class="col-md-3 p-0">
+                    <div class="title_host">
+                        <label>Port</label>
+                    </div>
+                    {% for sw in object_list %}
+                        {% if sw.switch_id == pk %}
+                            <div class="table_host">
+                                <label>{{ sw.port }}</label>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="col-md-3 p-0">
+                    <div class="title_host">
+                        <label>Hostname</label>
+                    </div>
+                    {% for sw in object_list %}
+                        {% if sw.switch_id == pk %}
+                            <div class="table_host">
+                                <label>{{ sw.hostname }}</label>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="col-3 p-0">
+                    <div class="title_host">
+                        <label>IP Address</label>
+                    </div>   
+                    {% for sw in object_list %}
+                        {% if sw.switch_id == pk %}
+                            <div class="table_host">
+                                <label>{{ sw.ip }}</label>
+                            </div>
+                        {% endif %}
+                    {% endfor %} 
+                </div>
+                <div class="col-3 p-0">
+                    <div class="title_host">
+                        <label>MAC Address</label>
+                    </div>
+                    {% for sw in object_list %}
+                        {% if sw.switch_id == pk %}
+                            <div class="table_host">
+                                <label>{{ sw.mac_1 }}</label>
+                            </div>
+                        {% endif %}
+                    {% endfor %}    
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+{% endblock %}
+

@@ -1,0 +1,20 @@
+.table_align{
+    text-align: center;
+    margin-top: 10vh;
+}
+.title_host{
+    background-color: rgb(37, 36, 36);
+}
+.table_host{
+    background-color: rgb(73, 71, 71);
+}
+.title_host label{
+    font-weight: bold;
+}
+.table_host label{
+    font-weight: bold;
+}
+i{
+    margin-left: 20px;
+    color: rgb(255, 249, 249);
+}

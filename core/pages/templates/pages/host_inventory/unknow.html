@@ -1,0 +1,71 @@
+{% extends 'pages/default.html' %}
+{% load static %}
+{% block title %}
+<link rel="stylesheet" href="{% static 'css/unknow.css' %}">
+<title>Unknow Table</title>
+{% endblock %}
+{% block content %}
+<div class="table_align">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+            </div>
+            <div class="col-md-2 p-0">
+                <div class="title_host">
+                    <label>IP Address</label>
+                </div>
+                {% for unw in object_list %}
+                <div class="table_host">
+                    <label>{{ unw.ip }}</label>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="col-md-2 p-0">
+                <div class="title_host">
+                    <label>MAC Address</label>
+                </div>
+                {% for unw in object_list %}
+                <div class="table_host">
+                    <label>{{ unw.mac }}</label>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="col-3 p-0">
+                <div class="title_host">
+                    <label>DNS</label>
+                </div>   
+                {% for unw in object_list %}
+                <div class="table_host">
+                    <label>{{ unw.dns }}</label>
+                </div>
+                {% endfor %} 
+            </div>
+            <div class="col-3 p-0">
+                <div class="title_host">
+                    <label>Scan Time</label>
+                </div>
+                {% for unw in object_list %}
+                <div class="table_host">
+                    <label>{{ unw.scan_time }}</label>
+                </div>
+                {% endfor %}    
+            </div>
+            <div class="col-2 p-0">
+                <div class="title_host">
+                    <label>Actions</label>
+                </div>   
+                {% for unw in object_list %}
+                <div class="table_host">
+                    <label>
+                        <a href="{% url 'add_unw' unw.pk %}">
+                            <i class="fa-sharp fa-solid fa-circle-plus"></i>
+                        </a>
+                    </label>
+                </div>
+                {% endfor %} 
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

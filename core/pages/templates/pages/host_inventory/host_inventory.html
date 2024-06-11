@@ -1,0 +1,248 @@
+{% extends 'pages/default.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load url_replace %}
+{% block title %}
+<link rel="stylesheet" href="{% static 'css/host_inventory.css' %}">
+<title>Inventory Table</title>
+{% endblock %}
+{% block content %}
+<div class="table_align">
+    <div class="container-fluid my-5">
+        <div class="row">
+            <div class="col-2">
+                <button class="btn btn-dark">
+                    <a class="sub" href="{% url 'add_host' %}">Add Host</a>
+                </button>
+            </div>
+            <div class="col-8"></div>
+            <div class="col-2">
+                <button id="run-button" class="btn btn-dark">Force Update</button>
+                <div id="loading-indicator" style="display: none;">
+                    <div class="spinner-border text-light" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+                <script>
+                    $(document).ready(function() {
+                        var csrftoken = document.getElementsByName("csrfmiddlewaretoken")[0].value;
+                        $("#run-button").click(function() {
+                            $("#run-button").hide();
+                            $("#loading-indicator").show();
+                            $.ajax({
+                                url: "/host_inventory/att/",
+                                type: "POST",
+                                data: {},
+                                beforeSend: function (xhr) {
+                                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                                },
+                                success: function(response) {
+                                    $("#loading-indicator").hide();
+                                    $("#run-button").show();
+                                }
+                            });
+                        });
+                    });
+                </script>
+            </div>
+            <div class="col-12">
+                <hr>
+            </div>
+            <div class="col-12 my-2">
+                <form action="?" method="GET">
+                    {% csrf_token %}
+                    <div class="input-group">
+                        <input type="text" name="search_field" value="{{ request.GET.search_field }}" autocomplete="off" class="form-control custom-input">
+                        <div class="input-group-btn">
+                            <button type="submit" class="btn btn-dark input-group-addon">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
+                        </div>
+                        
+                    </div>
+                </form>
+            </div>
+            
+            <div class="col-md-2 p-0">
+                <div class="title_host">
+                    {% csrf_token %}
+                    {% if order == "ip" %}
+                        <label><a class="sub" href="?ordering=-ip">IP Address &#x25B2;</a></label>
+                    {% else %}
+                        <label><a class="sub" href="?ordering=ip">IP Address &#x25BC;</a></label>
+                    {% endif %}
+                </div>
+                {% for host in object_list %}
+                <div class="table_host">
+                    <label class="nowrap">{{ host.ip }}</label>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="col-md-2 p-0">
+                <div class="title_host">
+                    {% csrf_token %}
+                    {% if order == "hostname" %}
+                        <label><a class="sub" href="?ordering=-hostname">Hostname &#x25B2;</a></label>
+                    {% else %}
+                        <label><a class="sub" href="?ordering=hostname">Hostname &#x25BC;</a></label>
+                    {% endif %}
+                </div>
+                {% for host in object_list %}
+                <div class="table_host">
+                    <label class="nowrap"><a class="sub" href="{% url 'overview' host.pk %}">{{ host.hostname }}</a></label>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="col-2 p-0">
+                <div class="title_host">
+                    {% csrf_token %}
+                    {% if order == "host_type" %}
+                        <label><a class="sub" href="?ordering=-host_type">Type &#x25B2;</a></label>
+                    {% else %}
+                        <label><a class="sub" href="?ordering=host_type">Type &#x25BC;</a></label>
+                    {% endif %}
+                </div>   
+                {% for host in object_list %}
+                <div class="table_host">
+                    <label class="nowrap">{{ host.host_type }}</label>
+                </div>
+                {% endfor %} 
+            </div>
+            <div class="col-2 p-0">
+                <div class="title_host">
+                    {% csrf_token %}
+                    {% if order == "mac_1" %}
+                        <label><a class="sub" href="?ordering=-mac_1">Mac Address &#x25B2;</a></label>
+                    {% else %}
+                        <label><a class="sub" href="?ordering=mac_1">Mac Address &#x25BC;</a></label>
+                    {% endif %}
+                </div>   
+                {% for host in object_list %}
+                <div class="table_host">
+                    <label class="nowrap">{{ host.mac_1 }}</label>
+                </div>
+                {% endfor %} 
+            </div>
+            <div class="col-2 p-0">
+                <div class="title_host">
+                    <label class="nowrap">DNS</label>
+                </div>   
+                {% for host in object_list %}
+                <div class="table_host">
+                    <label class="nowrap">{{ host.dns }}</label>
+                </div>
+                {% endfor %} 
+            </div>
+            <div class="col-1 p-0">
+                <div class="title_host">
+                    <label class="nowrap">Empresa</label>
+                </div>   
+                {% for host in object_list %}
+                <div class="table_host">
+                    <label class="nowrap">{{ host.empresa }}</label>
+                </div>
+                {% endfor %} 
+            </div>
+            <div class="col-1 p-0">
+                <div class="title_host">
+                    <label class="nowrap">Actions</label>
+                </div>
+                {% for host in object_list %}
+                <div class="table_host">
+                    <label>
+                        <a class="nowrap" href="{% url 'edit_host' host.pk %}">
+                            <i class="fa-solid fa-marker edit"></i>
+                        </a>
+                        <a data-toggle="modal" data-target="#exampleModal{{ host.id }}" class="nowrap" href="">
+                            <i class="fa-solid fa-trash-can delete"></i>
+                        </a>                          
+                          <div class="modal fade" id="exampleModal{{ host.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="exampleModalLabel">Delete Host</h5>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Are you sure that you want to delete {{ host.hostname }}?</p>
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
+                                  <form action="{% url 'delete_host' host.id %}" method="POST">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                  </form>
+                                </div>
+                              </div>
+                            </div>
+                          </div> 
+                    </label>
+                </div>
+                {% endfor %}    
+            </div>
+            <div class="col-12">
+                <hr>
+            </div>
+            <div class="col-12">
+                <ul class="pagination pagination-sm justify-content-center">
+                    {% if page_obj.has_previous %}
+                        <li class="page-item"><a class="page-link" href="?{% url_replace page=page_obj.previous_page_number %}">&laquo;</a></li>
+                    {% endif %}
+
+                    {% for i in page_obj.paginator.page_range %}
+                        {% if i == 1 or i == 2 or i == 3 or i == page_obj.paginator.num_pages %}
+                            {% if page_obj.number == i %}
+                                <li class="page-item active"><a class="page-link" href="?{% url_replace page=i %}">{{ i }}</a></li>
+                            {% else %}
+                                <li class="page-item"><a class="page-link" href="?{% url_replace page=i %}">{{ i }}</a></li>
+                            {% endif %}
+                        {% else %}
+                            {% if page_obj.number == i %}
+                                <li class="page-item active"><a class="page-link" href="?{% url_replace page=i %}">{{ i }}</a></li>
+                            {% elif i > page_obj.number|add:'-1' and i < page_obj.number|add:'3' %}
+                                <li class="page-item"><a class="page-link" href="?{% url_replace page=i %}">{{ i }}</a></li>
+                            {% elif i == page_obj.number|add:'-1' or i == page_obj.number|add:'3' %}
+                                <li class="page-item"><a class="page-link">...</a></li>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                    {% if page_obj.has_next %}
+                        <li class="page-item"><a class="page-link" href="?{% url_replace page=page_obj.next_page_number %}">&raquo;</a></li>
+                    {% endif %}
+                </ul>
+                <script>
+                    
+                    var activeListItem = document.querySelector('.pagination .page-item.active');
+                  
+                    
+                    if (activeListItem) {
+                      var activeLink = activeListItem.querySelector('.page-link');
+                      if (activeLink) {
+                        activeLink.style.backgroundColor = 'rgb(37, 36, 36)';
+                        activeLink.style.borderColor = 'rgb(37, 36, 36)';
+                        activeLink.style.color = '#fff';
+                      }
+                    }
+                </script>
+                <script>
+                    
+                    var inactiveListItems = document.querySelectorAll('.pagination .page-item:not(.active)');
+                  
+                    
+                    inactiveListItems.forEach(function(item) {
+                      var link = item.querySelector('.page-link');
+                      if (link) {
+                        link.style.backgroundColor = 'rgb(104, 98, 98)';
+                        link.style.borderColor = 'rgb(104, 98, 98)';
+                        link.style.color = '#fff';
+                      }
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
